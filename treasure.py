@@ -28,6 +28,12 @@ class Treasure:
     def __repr__(self) -> str:
         return str(self)
 
+    def __le__(self, other):
+        return (self.value / self.weight) <= (other.value / other.weight)
+
+    def __gt__(self, other):
+        return not (self) <= (other)
+
 
 def generate_treasures() -> List[Treasure]:
     """
@@ -43,8 +49,7 @@ def generate_treasures() -> List[Treasure]:
 
         This assumes the randint and python set operations can be done in O(1) time.
     """
-    number_of_treasures = RandomGen.randint(TreasureConfig.MIN_NUMBER_OF_TREASURES.value,
-                                            TreasureConfig.MAX_NUMBER_OF_TREASURES.value)
+    number_of_treasures = RandomGen.randint(TreasureConfig.MIN_NUMBER_OF_TREASURES.value, TreasureConfig.MAX_NUMBER_OF_TREASURES.value)
 
     hollow_treasures: List[Treasure | None] = [None] * number_of_treasures
     ratios: set[float] = set()
